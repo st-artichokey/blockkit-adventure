@@ -6,6 +6,7 @@
 	"display_information": {
 		"name": "Block Kit Adventure",
 		"description": "A choose-your-own-adventure game built with Block Kit",
+		"long_description": "Block Kit Adventure is an interactive choose-your-own-adventure game that runs entirely inside Slack. The story — \"The Lost Deploy\" — drops you into a Friday afternoon production incident. Your choices determine how the situation unfolds across 13 scenes and 6 possible endings.\n\nEach scene is rendered with Block Kit components: headers, sections, buttons, dividers, and context blocks. Messages update in place as you progress, so the conversation stays clean.\n\nHow to play:\n• Use the \"Start Adventure\" global shortcut from Slack's search bar\n• Or open the app's Home tab and click \"Start Adventure\"\n\nThe game sends a DM with your first scene. Click buttons to make choices. At the end, you'll see a summary of the path you took and can play again to explore different outcomes.",
 		"background_color": "#1a1a2e"
 	},
 	"features": {
