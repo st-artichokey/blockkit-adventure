@@ -7,7 +7,7 @@ allowed-tools: Read
 
 # Playtest — Story Path Tracer
 
-Walk through the adventure story graph to proofread narrative flow, verify choices make sense, and preview the player experience.
+Walk through the story graph to proofread narrative flow and preview the player experience.
 
 ## Input
 
@@ -15,54 +15,28 @@ Walk through the adventure story graph to proofread narrative flow, verify choic
 
 ## Steps
 
-### If no ending specified
+1. **Read** `story/nodes.js`. If an ending is specified and doesn't exist, list available endings and ask.
 
-1. **Read** `story/nodes.js`.
+2. **Find shortest path(s)** from `STARTING_NODE_ID` to the target ending(s) using BFS.
 
-2. **List all endings** in a summary table:
+3. **Output each path** as:
 
-   | Ending | Node ID | Emoji | Summary |
-   |---|---|---|---|
-   | The title | `node_id` | :emoji: | One-line summary |
+   ```
+   --- Path to: <ending title> (<node ID>) ---
 
-3. **Trace a path to each ending** using BFS (shortest path from `STARTING_NODE_ID`). For each path, output the walkthrough format below.
+   [Step 1] <node title>
+   <first 150 chars of narrative>...
+     > Choice taken: "<button text>"
 
-### If ending specified
+   [Step N] <ending title> :emoji:
+   <full narrative text>
 
-1. **Read** `story/nodes.js`.
-2. **Find shortest path** from `STARTING_NODE_ID` to the specified ending using BFS.
-3. If the ending doesn't exist, list available endings and ask which one.
+   ENDING: <summary>
+   Total steps: N
+   ```
 
-### Walkthrough output format
-
-For each path, output:
-
-```
---- Path to: <ending title> (<ending node ID>) ---
-
-[Step 1] <node title>
-<first 150 chars of narrative text>...
-  > Choice taken: "<choice button text>"
-
-[Step 2] <node title>
-<first 150 chars of narrative text>...
-  > Choice taken: "<choice button text>"
-
-...
-
-[Step N] <ending title> :emoji:
-<full narrative text>
-
-ENDING: <summary>
-Total steps: N
-```
-
-### Proofreading checks
-
-While tracing, flag any issues:
-- **Tone breaks**: narrative shifts that feel jarring between connected nodes
-- **Dead references**: choices mentioning characters or events not introduced yet
-- **Pacing**: paths that are very short (< 3 steps) or very long (> 7 steps) to reach an ending
-- **Button clarity**: choice labels that are vague or don't hint at consequences
-
-Report issues after the walkthrough, not inline.
+4. **Flag issues** after the walkthrough (not inline):
+   - **Tone breaks** between connected nodes
+   - **Dead references** to characters/events not yet introduced
+   - **Pacing** — paths shorter than 3 steps or longer than 7
+   - **Button clarity** — vague labels that don't hint at consequences
