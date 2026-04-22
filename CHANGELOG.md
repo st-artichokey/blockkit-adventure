@@ -15,6 +15,10 @@
 
 - Skill test fixtures and manual test guide (`tests/SKILL-TESTS.md`, `tests/fixtures/bad-renderer.js`)
 
+### Tested
+- Manual end-to-end testing of all 5 Claude Code skills (`/size-it`, `/scaffold`, `/validate-blocks`, `/playtest`, `/slack-api`)
+- `/playtest` full-graph trace identified `ignore_alert` as a 2-step path (below 3-step pacing guideline)
+
 ### Changed
 - Skills README: added first-time setup note about restarting Claude Code for skill discovery
 - Refined all documentation for brevity, accuracy, and accessibility
