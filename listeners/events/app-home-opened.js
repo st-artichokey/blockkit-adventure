@@ -47,6 +47,14 @@ export async function appHomeOpenedCallback({ event, client, logger }) {
 					},
 					{ type: "divider" },
 					{
+						type: "section",
+						text: {
+							type: "mrkdwn",
+							text: ":books: *Learn more about Block Kit*\n• <https://docs.slack.dev/reference/block-kit|Block Kit documentation>\n• <https://app.slack.com/block-kit-builder|Block Kit Builder> — design and preview layouts",
+						},
+					},
+					{ type: "divider" },
+					{
 						type: "context",
 						elements: [
 							{

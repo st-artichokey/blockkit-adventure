@@ -12,15 +12,18 @@
 - 5 Claude Code skills: scaffold, validate-blocks, playtest, slack-api, size-it
 - CLAUDE.md with project conventions for Claude Code
 - Annotated `.env.sample` with token guidance
-
 - Skill test fixtures and manual test guide (`tests/SKILL-TESTS.md`, `tests/fixtures/bad-renderer.js`)
+- About tab content via `long_description` in manifest
+- `app_directory` section with placeholder Marketplace links
+- Block Kit documentation and Block Kit Builder links in App Home tab
+
+### Changed
+- Manifest: rewrote `long_description` and `description` for developer audience learning Block Kit
+- Manifest: added `commands` bot scope (required for global shortcuts)
+- Skills README: added first-time setup note, explainer for new users, recommended workflow
+- Refined all documentation for brevity, accuracy, and accessibility
+- CONTRIBUTING AI section condensed; links to skills README instead of duplicating table
 
 ### Tested
 - Manual end-to-end testing of all 5 Claude Code skills (`/size-it`, `/scaffold`, `/validate-blocks`, `/playtest`, `/slack-api`)
 - `/playtest` full-graph trace identified `ignore_alert` as a 2-step path (below 3-step pacing guideline)
-
-### Changed
-- Skills README: added first-time setup note about restarting Claude Code for skill discovery
-- Refined all documentation for brevity, accuracy, and accessibility
-- Skills README rewritten with explainer for new users, recommended workflow
-- CONTRIBUTING AI section condensed; links to skills README instead of duplicating table
