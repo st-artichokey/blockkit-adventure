@@ -1,0 +1,43 @@
+{
+	"_metadata": {
+		"major_version": 1,
+		"minor_version": 1
+	},
+	"display_information": {
+		"name": "Block Kit Adventure",
+		"description": "A choose-your-own-adventure game built with Block Kit",
+		"background_color": "#1a1a2e"
+	},
+	"features": {
+		"app_home": {
+			"home_tab_enabled": true,
+			"messages_tab_enabled": true
+		},
+		"bot_user": {
+			"display_name": "Adventure Bot",
+			"always_online": true
+		},
+		"shortcuts": [
+			{
+				"name": "Start Adventure",
+				"type": "global",
+				"callback_id": "start_adventure",
+				"description": "Begin a choose-your-own-adventure game"
+			}
+		]
+	},
+	"oauth_config": {
+		"scopes": {
+			"bot": ["chat:write", "im:write"]
+		}
+	},
+	"settings": {
+		"event_subscriptions": {
+			"bot_events": ["app_home_opened"]
+		},
+		"interactivity": {
+			"is_enabled": true
+		},
+		"socket_mode_enabled": true
+	}
+}
