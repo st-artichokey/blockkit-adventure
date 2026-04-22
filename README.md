@@ -14,41 +14,16 @@ A Slack Bolt app that demonstrates Block Kit UI through a choose-your-own-advent
 
 - [Node.js](https://nodejs.org/) v18 or later
 - A [Slack workspace](https://slack.com/get-started#/createnew) where you can install apps
-- A Slack app configured with Socket Mode (see [Setup](#setup))
 
-## Setup
+## Quick Start
 
-1. **Create a Slack app**
-
-   Go to [api.slack.com/apps](https://api.slack.com/apps) and click **Create New App** → **From a manifest**. Paste the contents of [`manifest.json`](manifest.json).
-
-2. **Generate tokens**
-
-   - **Bot token** (`xoxb-`): Install the app to your workspace under **OAuth & Permissions**
-   - **App-level token** (`xapp-`): Under **Basic Information** → **App-Level Tokens**, create a token with the `connections:write` scope
-
-3. **Configure environment**
+1. Create a Slack app at [api.slack.com/apps](https://api.slack.com/apps) → **From a manifest** using [`manifest.json`](manifest.json)
+2. Generate a **bot token** (`xoxb-`) under OAuth & Permissions and an **app-level token** (`xapp-`) with `connections:write` scope under Basic Information
+3. Set up and run:
 
    ```sh
-   cp .env.sample .env
-   ```
-
-   Edit `.env` and add your tokens:
-
-   ```
-   SLACK_BOT_TOKEN=xoxb-your-bot-token
-   SLACK_APP_TOKEN=xapp-your-app-level-token
-   ```
-
-4. **Install dependencies**
-
-   ```sh
+   cp .env.sample .env   # add your tokens here
    npm install
-   ```
-
-5. **Start the app**
-
-   ```sh
    npm start
    ```
 
