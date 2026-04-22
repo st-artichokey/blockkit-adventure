@@ -5,8 +5,8 @@
 	},
 	"display_information": {
 		"name": "Block Kit Adventure",
-		"description": "A choose-your-own-adventure game built with Block Kit",
-		"long_description": "Block Kit Adventure is an interactive choose-your-own-adventure game that runs entirely inside Slack. The story — \"The Lost Deploy\" — drops you into a Friday afternoon production incident. Your choices determine how the situation unfolds across 13 scenes and 6 possible endings.\n\nEach scene is rendered with Block Kit components: headers, sections, buttons, dividers, and context blocks. Messages update in place as you progress, so the conversation stays clean.\n\nHow to play:\n• Use the \"Start Adventure\" global shortcut from Slack's search bar\n• Or open the app's Home tab and click \"Start Adventure\"\n\nThe game sends a DM with your first scene. Click buttons to make choices. At the end, you'll see a summary of the path you took and can play again to explore different outcomes.",
+		"description": "Learn Block Kit features by playing a choose-your-own-adventure game",
+		"long_description": "Block Kit Adventure is a choose-your-own-adventure game that doubles as a working reference for Slack's Block Kit framework. Play through \"The Lost Deploy\" — a developer-themed story about a Friday afternoon production incident — and see how each Block Kit component is used in context.\n\nThe app demonstrates five Block Kit block types in action:\n• Header blocks for scene titles\n• Section blocks with mrkdwn formatting for narrative text\n• Actions blocks with styled buttons (primary and danger) for player choices\n• Context blocks for progress indicators\n• Divider blocks for visual separation\n\nIt also covers common Slack platform patterns: global shortcuts, App Home tabs with views.publish, in-place message updates with chat.update, and DM-based interactions.\n\n13 scenes, 6 endings, and branching paths — explore different outcomes to see every component in use.\n\nHow to play:\n• Use the \"Start Adventure\" global shortcut from Slack's search bar\n• Or open the app's Home tab and click \"Start Adventure\"\n\nThe source code is designed to be read alongside the app. Each Block Kit pattern maps directly to a function you can reference in your own projects.",
 		"background_color": "#1a1a2e"
 	},
 	"features": {
@@ -29,8 +29,15 @@
 	},
 	"oauth_config": {
 		"scopes": {
-			"bot": ["chat:write", "im:write"]
+			"bot": ["chat:write", "commands", "im:write"]
 		}
+	},
+	"app_directory": {
+		"_comment": "Required for Slack Marketplace listing. See https://docs.slack.dev/reference/app-manifest#app_directory",
+		"privacy_policy_url": "https://docs.slack.dev/distributing/guidelines-for-slack-marketplace#privacy",
+		"support_url": "https://docs.slack.dev/distributing/guidelines-for-slack-marketplace#support",
+		"support_email": "placeholder@example.com",
+		"installation_landing_page": "https://docs.slack.dev/distributing/guidelines-for-slack-marketplace#installation"
 	},
 	"settings": {
 		"event_subscriptions": {

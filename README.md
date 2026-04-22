@@ -62,6 +62,10 @@ blockkit-adventure/
 | `npm run lint` | Check code with Biome |
 | `npm run lint:fix` | Auto-fix lint and formatting issues |
 
+## Development with Claude Code
+
+This project includes [Claude Code skills](.claude/skills/README.md) for common tasks like scaffolding scenes, validating Block Kit output, and looking up Slack API references.
+
 ## Tech Stack
 
 - **Runtime**: Node.js (ESM)
