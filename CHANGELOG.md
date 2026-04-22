@@ -13,7 +13,10 @@
 - CLAUDE.md with project conventions for Claude Code
 - Annotated `.env.sample` with token guidance
 
+- Skill test fixtures and manual test guide (`tests/SKILL-TESTS.md`, `tests/fixtures/bad-renderer.js`)
+
 ### Changed
+- Skills README: added first-time setup note about restarting Claude Code for skill discovery
 - Refined all documentation for brevity, accuracy, and accessibility
 - Skills README rewritten with explainer for new users, recommended workflow
 - CONTRIBUTING AI section condensed; links to skills README instead of duplicating table

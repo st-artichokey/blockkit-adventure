@@ -7,6 +7,8 @@ Skills are reusable instructions that teach [Claude Code](https://code.claude.co
 Skills live in this folder (`.claude/skills/`) and load only when needed.
 
 > **Note:** Skills require [Claude Code](https://code.claude.com). Without it, these files are inert markdown. The rest of the project works fine without them.
+>
+> **First time setup:** After cloning the repo, restart Claude Code once so it discovers the skill directories. Existing skills update live within a session, but new directories need a restart to appear in `/` autocomplete.
 
 ## Available Skills
 
