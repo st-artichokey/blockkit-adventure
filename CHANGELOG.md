@@ -13,6 +13,8 @@
 
 ### Changed
 - Restyled button styles using time pressure logic: `danger` = act now without full information, `primary` = take time to investigate, unstyled = neutral. Styles no longer spoil outcomes.
+- Confirm dialogs on all danger-styled buttons — prompts like "No time to check?" and "Bypass branch protection?" before impulsive actions
+- `im:history` scope, `pricing`, and `supported_languages` added to manifest
 
 ## 2026-04-22
 

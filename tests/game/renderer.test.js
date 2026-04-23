@@ -46,6 +46,31 @@ describe("buildStoryBlocks", () => {
 		assert.equal(actions.elements[1].style, undefined);
 	});
 
+	it("attaches confirm dialog when choice has confirmText", () => {
+		const nodeWithConfirm = {
+			...node,
+			choices: [
+				{ text: "Risky move", nextNodeId: "node_a", style: "danger", confirmText: "Are you sure?" },
+				{ text: "Safe move", nextNodeId: "node_b", style: "primary" },
+			],
+		};
+		const blocks = buildStoryBlocks(nodeWithConfirm, ["test_node"]);
+		const actions = blocks[3];
+		const dangerButton = actions.elements[0];
+		const safeButton = actions.elements[1];
+
+		assert.ok(dangerButton.confirm, "danger button with confirmText should have confirm");
+		assert.equal(dangerButton.confirm.title.text, "Are you sure?");
+		assert.equal(dangerButton.confirm.title.type, "plain_text");
+		assert.equal(dangerButton.confirm.confirm.type, "plain_text");
+		assert.equal(dangerButton.confirm.deny.type, "plain_text");
+		assert.equal(
+			safeButton.confirm,
+			undefined,
+			"button without confirmText should have no confirm",
+		);
+	});
+
 	it("includes View Journey and Help buttons", () => {
 		const blocks = buildStoryBlocks(node, ["test_node"]);
 		const modalActions = blocks[4];

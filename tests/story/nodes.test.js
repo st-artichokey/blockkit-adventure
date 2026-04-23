@@ -62,6 +62,22 @@ describe("Story graph integrity", () => {
 		assert.ok(endings.length > 0, "Story must have at least one ending");
 	});
 
+	it("confirmText only appears on danger-styled choices", () => {
+		for (const [nodeId, node] of Object.entries(STORY_NODES)) {
+			if (node.choices) {
+				for (const choice of node.choices) {
+					if (choice.confirmText) {
+						assert.equal(
+							choice.style,
+							"danger",
+							`Node "${nodeId}" choice "${choice.text}" has confirmText but style is "${choice.style}" (expected "danger")`,
+						);
+					}
+				}
+			}
+		}
+	});
+
 	it("every node has required fields", () => {
 		for (const [nodeId, node] of Object.entries(STORY_NODES)) {
 			assert.equal(node.id, nodeId, `Node "${nodeId}" id field must match its key`);
