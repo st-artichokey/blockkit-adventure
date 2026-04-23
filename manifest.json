@@ -29,7 +29,7 @@
 	},
 	"oauth_config": {
 		"scopes": {
-			"bot": ["chat:write", "commands", "im:write"]
+			"bot": ["chat:write", "commands", "im:history", "im:write"]
 		}
 	},
 	"app_directory": {
@@ -37,7 +37,9 @@
 		"privacy_policy_url": "https://docs.slack.dev/distributing/guidelines-for-slack-marketplace#privacy",
 		"support_url": "https://docs.slack.dev/distributing/guidelines-for-slack-marketplace#support",
 		"support_email": "placeholder@example.com",
-		"installation_landing_page": "https://docs.slack.dev/distributing/guidelines-for-slack-marketplace#installation"
+		"installation_landing_page": "https://docs.slack.dev/distributing/guidelines-for-slack-marketplace#installation",
+		"pricing": "free",
+		"supported_languages": ["en"]
 	},
 	"settings": {
 		"event_subscriptions": {
