@@ -1,4 +1,5 @@
 import { adventureChoiceCallback } from "./adventure-choice.js";
+import { helpCallback, viewJourneyCallback } from "./open-modal.js";
 
 /**
  * Register action listeners.
@@ -7,4 +8,6 @@ import { adventureChoiceCallback } from "./adventure-choice.js";
 export function register(app) {
 	app.action(/^adventure_choice_/, adventureChoiceCallback);
 	app.action("adventure_play_again", adventureChoiceCallback);
+	app.action("adventure_view_journey", viewJourneyCallback);
+	app.action("adventure_help", helpCallback);
 }

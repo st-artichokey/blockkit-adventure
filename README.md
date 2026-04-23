@@ -6,7 +6,7 @@ A Slack Bolt app that demonstrates Block Kit UI through a choose-your-own-advent
 
 **The Lost Deploy** — it's 4:59 PM on a Friday and a production deploy just failed. Your choices determine how the incident plays out. Every path showcases different Block Kit components in action.
 
-- 13 story nodes with branching paths
+- 13 story nodes with branching paths — [see the decision tree](docs/decision-tree.md)
 - 6 unique endings
 - Block Kit elements: headers, sections, dividers, action buttons, context blocks
 

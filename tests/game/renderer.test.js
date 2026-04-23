@@ -13,10 +13,10 @@ describe("buildStoryBlocks", () => {
 		],
 	};
 
-	it("returns header, section, divider, actions, and context blocks", () => {
+	it("returns header, section, divider, actions (choices), actions (modal buttons), and context blocks", () => {
 		const blocks = buildStoryBlocks(node, ["start", "test_node"]);
 		const types = blocks.map((b) => b.type);
-		assert.deepEqual(types, ["header", "section", "divider", "actions", "context"]);
+		assert.deepEqual(types, ["header", "section", "divider", "actions", "actions", "context"]);
 	});
 
 	it("header contains the node title", () => {
@@ -46,9 +46,17 @@ describe("buildStoryBlocks", () => {
 		assert.equal(actions.elements[1].style, undefined);
 	});
 
+	it("includes View Journey and Help buttons", () => {
+		const blocks = buildStoryBlocks(node, ["test_node"]);
+		const modalActions = blocks[4];
+		assert.equal(modalActions.elements.length, 2);
+		assert.equal(modalActions.elements[0].action_id, "adventure_view_journey");
+		assert.equal(modalActions.elements[1].action_id, "adventure_help");
+	});
+
 	it("context shows the step count", () => {
 		const blocks = buildStoryBlocks(node, ["a", "b", "test_node"]);
-		assert.ok(blocks[4].elements[0].text.includes("Step 3"));
+		assert.ok(blocks[5].elements[0].text.includes("Step 3"));
 	});
 });
 
@@ -90,6 +98,13 @@ describe("buildEndingBlocks", () => {
 		const blocks = buildEndingBlocks(endingNode, ["the_end"]);
 		const actions = blocks[6];
 		assert.equal(actions.elements[0].action_id, "adventure_play_again");
+	});
+
+	it("ending actions include a Help button", () => {
+		const blocks = buildEndingBlocks(endingNode, ["the_end"]);
+		const actions = blocks[6];
+		assert.equal(actions.elements.length, 2);
+		assert.equal(actions.elements[1].action_id, "adventure_help");
 	});
 
 	it("uses fallback emoji when node has none", () => {
