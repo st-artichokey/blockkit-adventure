@@ -95,7 +95,7 @@ export function buildHelpModal() {
 				type: "section",
 				text: {
 					type: "mrkdwn",
-					text: ':point_right: *Making choices*\nEach scene presents you with buttons. Click one to advance the story. Blue buttons are the "safe" choice, red buttons are risky.',
+					text: ':point_right: *Making choices*\nEach scene presents you with buttons. Click one to advance the story. Green buttons mean "take your time," red buttons mean "act now" — but neither guarantees a good outcome.',
 				},
 			},
 			{
