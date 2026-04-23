@@ -33,8 +33,8 @@ export const STORY_NODES = {
 		text: "It's *4:59 PM on a Friday*. You're about to close your laptop when your phone buzzes.\n\n> :rotating_light: *ALERT: Production deploy failed. Error rate spiking 5x.*\n\nYour heart sinks. The deploy went out 10 minutes ago and nobody noticed until now. The on-call engineer is on a flight. What do you do?",
 		choices: [
 			{ text: "Check the logs", nextNodeId: "check_logs", style: "primary" },
-			{ text: "Rollback immediately", nextNodeId: "rollback_blind" },
-			{ text: "Close laptop and leave", nextNodeId: "ignore_alert", style: "danger" },
+			{ text: "Rollback immediately", nextNodeId: "rollback_blind", style: "danger" },
+			{ text: "Close laptop and leave", nextNodeId: "ignore_alert" },
 		],
 	},
 
@@ -43,8 +43,8 @@ export const STORY_NODES = {
 		title: "Into the Logs",
 		text: "You SSH into the production box and tail the logs. Errors are flying by:\n\n```\nERROR: Cannot read property 'email' of undefined\nERROR: Cannot read property 'email' of undefined\nERROR: Cannot read property 'email' of undefined\n```\n\nIt looks like the new user profile endpoint is crashing. The deploy changed how user data is fetched. You spot two possible causes.",
 		choices: [
-			{ text: "Hotfix the null check", nextNodeId: "hotfix_null", style: "primary" },
-			{ text: "Rollback with context", nextNodeId: "rollback_smart" },
+			{ text: "Hotfix the null check", nextNodeId: "hotfix_null", style: "danger" },
+			{ text: "Rollback with context", nextNodeId: "rollback_smart", style: "primary" },
 			{ text: "Page the author", nextNodeId: "page_author" },
 		],
 	},
@@ -54,8 +54,8 @@ export const STORY_NODES = {
 		title: "Blind Rollback",
 		text: "You fire off the rollback command without checking what changed. The deploy pipeline kicks off...\n\n:hourglass_flowing_sand: 3 minutes pass...\n\nThe rollback completes, but the error rate is *still climbing*. Turns out the previous version had a different bug that was masked by a feature flag — which was toggled off in the new deploy. Now you have *two* problems.",
 		choices: [
-			{ text: "Check the logs now", nextNodeId: "check_logs" },
-			{ text: "Roll forward to the broken version", nextNodeId: "roll_forward_chaos" },
+			{ text: "Check the logs now", nextNodeId: "check_logs", style: "primary" },
+			{ text: "Roll forward to the broken version", nextNodeId: "roll_forward_chaos", style: "danger" },
 		],
 	},
 
@@ -84,7 +84,7 @@ export const STORY_NODES = {
 		title: "Strategic Rollback",
 		text: "You check the diff, verify the previous version is stable, and initiate a rollback with a clear incident note in Slack.\n\n:white_check_mark: Error rate drops to zero within 2 minutes.\n\nYou write up a quick summary of the root cause and pin it in the channel. But now you have a choice about what to do next.",
 		choices: [
-			{ text: "Write a post-mortem tonight", nextNodeId: "postmortem_tonight" },
+			{ text: "Write a post-mortem tonight", nextNodeId: "postmortem_tonight", style: "primary" },
 			{ text: "Set up monitoring and go home", nextNodeId: "monitor_and_go" },
 		],
 	},
@@ -114,7 +114,7 @@ export const STORY_NODES = {
 		title: "Emergency Review",
 		text: 'You ping the channel: "Need emergency review — prod is down, one-line null check fix."\n\n:eyes: Sarah responds in 45 seconds. "LGTM, merging now."\n\nThe fix deploys. Error rate drops. You update the incident channel with the resolution.',
 		choices: [
-			{ text: "Write a post-mortem tonight", nextNodeId: "postmortem_tonight" },
+			{ text: "Write a post-mortem tonight", nextNodeId: "postmortem_tonight", style: "primary" },
 			{ text: "Set up monitoring and go home", nextNodeId: "monitor_and_go" },
 		],
 	},

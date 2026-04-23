@@ -38,6 +38,22 @@ export function buildStoryBlocks(node, choiceHistory) {
 	}
 
 	blocks.push({
+		type: "actions",
+		elements: [
+			{
+				type: "button",
+				text: { type: "plain_text", text: ":scroll: View Journey", emoji: true },
+				action_id: "adventure_view_journey",
+			},
+			{
+				type: "button",
+				text: { type: "plain_text", text: ":question: Help", emoji: true },
+				action_id: "adventure_help",
+			},
+		],
+	});
+
+	blocks.push({
 		type: "context",
 		elements: [
 			{
@@ -100,6 +116,11 @@ export function buildEndingBlocks(node, choiceHistory) {
 					text: { type: "plain_text", text: "Play Again", emoji: true },
 					action_id: "adventure_play_again",
 					style: "primary",
+				},
+				{
+					type: "button",
+					text: { type: "plain_text", text: ":question: Help", emoji: true },
+					action_id: "adventure_help",
 				},
 			],
 		},

@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-04-23
+
+### Added
+- Modal views: Journey Log modal (shows player's path) and Help modal (game mechanics)
+- `game/modals.js` with `buildJourneyLogModal()` and `buildHelpModal()` builders
+- `listeners/actions/open-modal.js` with action handlers for `adventure_view_journey` and `adventure_help`
+- "View Journey" and "Help" buttons in story scenes; "Help" button on ending screens
+- `docs/blockkit-feature-reference.md` — comprehensive Block Kit feature checklist with implementation status
+- 14 new tests for modal builders (46 total)
+- `docs/decision-tree.md` — ASCII map of all story branching paths and endings
+
+### Changed
+- Restyled button styles using time pressure logic: `danger` = act now without full information, `primary` = take time to investigate, unstyled = neutral. Styles no longer spoil outcomes.
+
 ## 2026-04-22
 
 ### Added

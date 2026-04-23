@@ -10,12 +10,7 @@
 		"lint": "biome check .",
 		"lint:fix": "biome check --write ."
 	},
-	"keywords": [
-		"slack",
-		"bolt",
-		"block-kit",
-		"adventure"
-	],
+	"keywords": ["slack", "bolt", "block-kit", "adventure"],
 	"license": "MIT",
 	"dependencies": {
 		"@slack/bolt": "^4.6.0",
