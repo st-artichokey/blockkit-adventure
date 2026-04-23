@@ -52,7 +52,7 @@ A checklist of Block Kit features and their implementation status in blockkit-ad
 |--------|--------|-------|
 | plain_text | :white_check_mark: Used | Button labels, headers |
 | mrkdwn | :white_check_mark: Used | Narrative content, info text |
-| Confirm Dialog | Not yet | "Are you sure?" on dangerous actions |
+| Confirm Dialog | :white_check_mark: Used | "Are you sure?" on danger-styled buttons |
 | Option Object | Not yet | Items for select menus, radio buttons, checkboxes |
 | Option Group | Not yet | Grouped options in select menus |
 | Dispatch Action Config | Not yet | Control when actions fire from inputs |

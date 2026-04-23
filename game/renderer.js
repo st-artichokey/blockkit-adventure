@@ -32,6 +32,14 @@ export function buildStoryBlocks(node, choiceHistory) {
 				if (choice.style) {
 					button.style = choice.style;
 				}
+				if (choice.confirmText) {
+					button.confirm = {
+						title: { type: "plain_text", text: choice.confirmText },
+						text: { type: "mrkdwn", text: `_${choice.text}_ — this can't be undone.` },
+						confirm: { type: "plain_text", text: "Do it" },
+						deny: { type: "plain_text", text: "Wait, go back" },
+					};
+				}
 				return button;
 			}),
 		});

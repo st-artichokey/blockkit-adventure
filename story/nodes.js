@@ -12,6 +12,7 @@ export const STARTING_NODE_ID = "friday_alert";
  * @param {string} text - Button label
  * @param {string} nextNodeId - ID of the next story node
  * @param {string} [style] - Button style: "primary" or "danger"
+ * @param {string} [confirmText] - If set, shows a confirm dialog with this title before proceeding
  */
 
 /**
@@ -33,7 +34,12 @@ export const STORY_NODES = {
 		text: "It's *4:59 PM on a Friday*. You're about to close your laptop when your phone buzzes.\n\n> :rotating_light: *ALERT: Production deploy failed. Error rate spiking 5x.*\n\nYour heart sinks. The deploy went out 10 minutes ago and nobody noticed until now. The on-call engineer is on a flight. What do you do?",
 		choices: [
 			{ text: "Check the logs", nextNodeId: "check_logs", style: "primary" },
-			{ text: "Rollback immediately", nextNodeId: "rollback_blind", style: "danger" },
+			{
+				text: "Rollback immediately",
+				nextNodeId: "rollback_blind",
+				style: "danger",
+				confirmText: "No time to check?",
+			},
 			{ text: "Close laptop and leave", nextNodeId: "ignore_alert" },
 		],
 	},
@@ -43,7 +49,12 @@ export const STORY_NODES = {
 		title: "Into the Logs",
 		text: "You SSH into the production box and tail the logs. Errors are flying by:\n\n```\nERROR: Cannot read property 'email' of undefined\nERROR: Cannot read property 'email' of undefined\nERROR: Cannot read property 'email' of undefined\n```\n\nIt looks like the new user profile endpoint is crashing. The deploy changed how user data is fetched. You spot two possible causes.",
 		choices: [
-			{ text: "Hotfix the null check", nextNodeId: "hotfix_null", style: "danger" },
+			{
+				text: "Hotfix the null check",
+				nextNodeId: "hotfix_null",
+				style: "danger",
+				confirmText: "Ship it without tests?",
+			},
 			{ text: "Rollback with context", nextNodeId: "rollback_smart", style: "primary" },
 			{ text: "Page the author", nextNodeId: "page_author" },
 		],
@@ -55,7 +66,12 @@ export const STORY_NODES = {
 		text: "You fire off the rollback command without checking what changed. The deploy pipeline kicks off...\n\n:hourglass_flowing_sand: 3 minutes pass...\n\nThe rollback completes, but the error rate is *still climbing*. Turns out the previous version had a different bug that was masked by a feature flag — which was toggled off in the new deploy. Now you have *two* problems.",
 		choices: [
 			{ text: "Check the logs now", nextNodeId: "check_logs", style: "primary" },
-			{ text: "Roll forward to the broken version", nextNodeId: "roll_forward_chaos", style: "danger" },
+			{
+				text: "Roll forward to the broken version",
+				nextNodeId: "roll_forward_chaos",
+				style: "danger",
+				confirmText: "Deploy on top of a broken deploy?",
+			},
 		],
 	},
 
@@ -75,7 +91,12 @@ export const STORY_NODES = {
 		text: "You write a quick null check, push it to a branch, and open a PR. But you need someone to approve it — company policy, no exceptions.\n\nThe Slack channel is quiet. It's Friday evening. You can see three people online in the team channel.",
 		choices: [
 			{ text: "Ask for emergency review", nextNodeId: "emergency_review", style: "primary" },
-			{ text: "Skip review and force-push to main", nextNodeId: "force_push", style: "danger" },
+			{
+				text: "Skip review and force-push to main",
+				nextNodeId: "force_push",
+				style: "danger",
+				confirmText: "Bypass branch protection?",
+			},
 		],
 	},
 
