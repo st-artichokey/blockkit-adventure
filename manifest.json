@@ -34,10 +34,10 @@
 	},
 	"app_directory": {
 		"_comment": "Required for Slack Marketplace listing. See https://docs.slack.dev/reference/app-manifest#app_directory",
-		"privacy_policy_url": "https://docs.slack.dev/distributing/guidelines-for-slack-marketplace#privacy",
-		"support_url": "https://docs.slack.dev/distributing/guidelines-for-slack-marketplace#support",
+		"privacy_policy_url": "https://docs.slack.dev/slack-marketplace/slack-marketplace-app-guidelines-and-requirements",
+		"support_url": "https://docs.slack.dev/slack-marketplace/slack-marketplace-app-guidelines-and-requirements",
 		"support_email": "placeholder@example.com",
-		"installation_landing_page": "https://docs.slack.dev/distributing/guidelines-for-slack-marketplace#installation",
+		"installation_landing_page": "https://docs.slack.dev/slack-marketplace/slack-marketplace-app-guidelines-and-requirements",
 		"pricing": "free",
 		"supported_languages": ["en"]
 	},

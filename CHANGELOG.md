@@ -29,6 +29,9 @@
 - Story now has 17 nodes and 8 endings (was 14 nodes, 6 endings)
 - 7 new tests (90 total)
 
+### Fixed
+- 10 broken `docs.slack.dev` URLs across `README.md`, `manifest.json`, and session logs — updated to current Slack documentation paths
+
 ## 2026-04-23
 
 ### Added
