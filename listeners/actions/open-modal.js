@@ -1,4 +1,5 @@
 import { buildHelpModal, buildJourneyLogModal } from "../../game/modals.js";
+import { getUserId } from "../helpers.js";
 import { getState } from "../../game/state.js";
 import { STARTING_NODE_ID } from "../../story/nodes.js";
 
@@ -13,7 +14,7 @@ import { STARTING_NODE_ID } from "../../story/nodes.js";
 export async function viewJourneyCallback({ ack, body, client, logger }) {
 	await ack();
 
-	const userId = body.user.id;
+	const userId = getUserId(body);
 	const state = getState(userId);
 	const choiceHistory = state?.choiceHistory ?? [STARTING_NODE_ID];
 

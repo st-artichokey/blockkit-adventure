@@ -85,6 +85,119 @@ describe("buildStoryBlocks", () => {
 	});
 });
 
+describe("buildStoryBlocks with formInput", () => {
+	const formNode = {
+		id: "form_node",
+		title: "Write Something",
+		text: "Time to write your response.",
+		formInput: {
+			label: "Your title",
+			placeholder: "Enter a title",
+			buttonText: ":memo: Write Title",
+			buttonStyle: "primary",
+			nextNodeId: "next_node",
+			stateKey: "myTitle",
+		},
+	};
+
+	it("renders a single form button when node has formInput", () => {
+		const blocks = buildStoryBlocks(formNode, ["form_node"]);
+		const actions = blocks[3];
+		assert.equal(actions.elements.length, 1);
+		assert.equal(actions.elements[0].type, "button");
+	});
+
+	it("form input button has action_id adventure_open_form", () => {
+		const blocks = buildStoryBlocks(formNode, ["form_node"]);
+		const button = blocks[3].elements[0];
+		assert.equal(button.action_id, "adventure_open_form");
+	});
+
+	it("form input button value is the node id", () => {
+		const blocks = buildStoryBlocks(formNode, ["form_node"]);
+		const button = blocks[3].elements[0];
+		assert.equal(button.value, "form_node");
+	});
+
+	it("form input button uses the buttonText and buttonStyle", () => {
+		const blocks = buildStoryBlocks(formNode, ["form_node"]);
+		const button = blocks[3].elements[0];
+		assert.equal(button.text.text, ":memo: Write Title");
+		assert.equal(button.style, "primary");
+	});
+});
+
+describe("buildStoryBlocks with formInput + choices (mixed actions)", () => {
+	const mixedNode = {
+		id: "mixed_node",
+		title: "Mixed Actions",
+		text: "You can fill the form or skip it.",
+		formInput: {
+			label: "Your title",
+			placeholder: "Enter a title",
+			buttonText: ":memo: Write Title",
+			buttonStyle: "primary",
+			nextNodeId: "next_node",
+			stateKey: "myTitle",
+		},
+		choices: [{ text: "Skip it", nextNodeId: "skip_node" }],
+	};
+
+	it("renders form button and choice buttons in a single actions block", () => {
+		const blocks = buildStoryBlocks(mixedNode, ["mixed_node"]);
+		const actions = blocks[3];
+		assert.equal(actions.elements.length, 2);
+	});
+
+	it("form button comes first, choice buttons follow", () => {
+		const blocks = buildStoryBlocks(mixedNode, ["mixed_node"]);
+		const actions = blocks[3];
+		assert.equal(actions.elements[0].action_id, "adventure_open_form");
+		assert.equal(actions.elements[1].action_id, "adventure_choice_skip_node");
+	});
+
+	it("form button retains its style and value", () => {
+		const blocks = buildStoryBlocks(mixedNode, ["mixed_node"]);
+		const formBtn = blocks[3].elements[0];
+		assert.equal(formBtn.style, "primary");
+		assert.equal(formBtn.value, "mixed_node");
+		assert.equal(formBtn.text.text, ":memo: Write Title");
+	});
+});
+
+describe("template resolution", () => {
+	const templateNode = {
+		id: "tmpl_node",
+		title: "Template Node",
+		text: "You wrote: *{{myTitle}}*",
+		choices: [{ text: "Continue", nextNodeId: "next" }],
+	};
+
+	it("resolves template placeholders in story node text", () => {
+		const blocks = buildStoryBlocks(templateNode, ["tmpl_node"], { myTitle: "Bug Report" });
+		assert.equal(blocks[1].text.text, "You wrote: *Bug Report*");
+	});
+
+	it("leaves text unchanged when no formData provided", () => {
+		const blocks = buildStoryBlocks(templateNode, ["tmpl_node"]);
+		assert.equal(blocks[1].text.text, "You wrote: *{{myTitle}}*");
+	});
+
+	it("resolves template placeholders in ending text and summary", () => {
+		const endNode = {
+			id: "end",
+			title: "Done",
+			text: 'Title: "{{myTitle}}"',
+			isEnding: true,
+			summary: 'Wrote "{{myTitle}}"',
+			emoji: ":trophy:",
+		};
+		const blocks = buildEndingBlocks(endNode, ["end"], { myTitle: "Outage Fix" });
+		assert.equal(blocks[1].text.text, 'Title: "Outage Fix"');
+		assert.ok(blocks[3].text.text.includes('Wrote "Outage Fix"'));
+	});
+});
+
 describe("buildEndingBlocks", () => {
 	const endingNode = {
 		id: "the_end",

@@ -69,7 +69,7 @@ This project includes [Claude Code skills](.claude/skills/README.md) for common 
 ## Tech Stack
 
 - **Runtime**: Node.js (ESM)
-- **Framework**: [@slack/bolt](https://docs.slack.dev/bolt-js) v4
+- **Framework**: [@slack/bolt](https://docs.slack.dev/tools/bolt-js) v4
 - **Linter**: [Biome](https://biomejs.dev)
 - **Testing**: Node.js test runner + [esmock](https://github.com/iambumblehead/esmock)
 

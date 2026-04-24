@@ -28,12 +28,12 @@ describe("Story graph integrity", () => {
 		}
 	});
 
-	it("non-ending nodes have choices", () => {
+	it("non-ending nodes have choices or formInput", () => {
 		for (const [nodeId, node] of Object.entries(STORY_NODES)) {
 			if (!node.isEnding) {
 				assert.ok(
-					node.choices && node.choices.length > 0,
-					`Non-ending node "${nodeId}" must have at least one choice`,
+					(node.choices && node.choices.length > 0) || node.formInput,
+					`Non-ending node "${nodeId}" must have choices or formInput`,
 				);
 			}
 		}
@@ -47,12 +47,15 @@ describe("Story graph integrity", () => {
 					referencedIds.add(choice.nextNodeId);
 				}
 			}
+			if (node.formInput) {
+				referencedIds.add(node.formInput.nextNodeId);
+			}
 		}
 
 		for (const nodeId of Object.keys(STORY_NODES)) {
 			assert.ok(
 				referencedIds.has(nodeId),
-				`Node "${nodeId}" is orphaned — not reachable from any choice`,
+				`Node "${nodeId}" is orphaned — not reachable from any choice or formInput`,
 			);
 		}
 	});
@@ -73,6 +76,36 @@ describe("Story graph integrity", () => {
 							`Node "${nodeId}" choice "${choice.text}" has confirmText but style is "${choice.style}" (expected "danger")`,
 						);
 					}
+				}
+			}
+		}
+	});
+
+	it("formInput nodes have required fields", () => {
+		for (const [nodeId, node] of Object.entries(STORY_NODES)) {
+			if (node.formInput) {
+				const fi = node.formInput;
+				assert.ok(fi.label, `formInput node "${nodeId}" must have a label`);
+				assert.ok(fi.placeholder, `formInput node "${nodeId}" must have a placeholder`);
+				assert.ok(fi.buttonText, `formInput node "${nodeId}" must have buttonText`);
+				assert.ok(fi.nextNodeId, `formInput node "${nodeId}" must have nextNodeId`);
+				assert.ok(fi.stateKey, `formInput node "${nodeId}" must have stateKey`);
+				assert.ok(
+					STORY_NODES[fi.nextNodeId],
+					`formInput node "${nodeId}" references missing node "${fi.nextNodeId}"`,
+				);
+			}
+		}
+	});
+
+	it("formInput + choices nodes have valid nextNodeIds for both", () => {
+		for (const [nodeId, node] of Object.entries(STORY_NODES)) {
+			if (node.formInput && node.choices) {
+				for (const choice of node.choices) {
+					assert.ok(
+						STORY_NODES[choice.nextNodeId],
+						`Node "${nodeId}" escape choice "${choice.text}" references missing node "${choice.nextNodeId}"`,
+					);
 				}
 			}
 		}
