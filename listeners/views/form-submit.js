@@ -1,4 +1,6 @@
+import { FORM_INPUT_ACTION_ID, FORM_INPUT_BLOCK_ID } from "../../game/modals.js";
 import { buildEndingBlocks, buildStoryBlocks } from "../../game/renderer.js";
+import { getUserId } from "../helpers.js";
 import { advanceState, getFormData, getState, setFormData } from "../../game/state.js";
 import { STORY_NODES } from "../../story/nodes.js";
 
@@ -12,19 +14,19 @@ import { STORY_NODES } from "../../story/nodes.js";
  * @param {Object} params.logger - Logger instance
  */
 export async function formSubmitCallback({ ack, body, view, client, logger }) {
-	const inputValue = view.state.values.form_input_block.form_input_value.value;
+	const inputValue = view.state.values[FORM_INPUT_BLOCK_ID][FORM_INPUT_ACTION_ID].value;
 
 	if (!inputValue.trim()) {
 		await ack({
 			response_action: "errors",
-			errors: { form_input_block: "Please enter a response — it can't be only spaces." },
+			errors: { [FORM_INPUT_BLOCK_ID]: "Please enter a response — it can't be only spaces." },
 		});
 		return;
 	}
 
 	await ack();
 
-	const userId = body.user.id;
+	const userId = getUserId(body);
 	const { stateKey, nextNodeId } = JSON.parse(view.private_metadata);
 
 	const state = getState(userId);

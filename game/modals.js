@@ -1,5 +1,10 @@
 import { STORY_NODES } from "../story/nodes.js";
 
+/** Block ID for the form input block in modals. */
+export const FORM_INPUT_BLOCK_ID = "form_input_block";
+/** Action ID for the plain_text_input element in form modals. */
+export const FORM_INPUT_ACTION_ID = "form_input_value";
+
 /**
  * Build a modal view showing the player's journey so far.
  * @param {string[]} choiceHistory - Node IDs visited in order
@@ -85,7 +90,7 @@ function buildFormInputBlocks(formInput) {
 
 	blocks.push({
 		type: "input",
-		block_id: "form_input_block",
+		block_id: FORM_INPUT_BLOCK_ID,
 		label: {
 			type: "plain_text",
 			text: formInput.label,
@@ -93,7 +98,7 @@ function buildFormInputBlocks(formInput) {
 		},
 		element: {
 			type: "plain_text_input",
-			action_id: "form_input_value",
+			action_id: FORM_INPUT_ACTION_ID,
 			placeholder: {
 				type: "plain_text",
 				text: formInput.placeholder,

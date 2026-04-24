@@ -29,6 +29,14 @@
 - Story now has 17 nodes and 8 endings (was 14 nodes, 6 endings)
 - 7 new tests (90 total)
 
+### Refactored
+- Extracted `buildHelpButton()` and `buildJourneyButton()` helpers in `game/renderer.js` to deduplicate identical button construction
+- Exported `FORM_INPUT_BLOCK_ID` and `FORM_INPUT_ACTION_ID` constants from `game/modals.js`; replaced magic strings in `listeners/views/form-submit.js`
+- Extracted `getUserId()` helper in `listeners/helpers.js` for consistent user ID extraction across all listeners
+- Removed dead `currentNodeId` property from `GameState` — only `choiceHistory` is used in production code
+- Removed unused `getState` import from `adventure-choice.js`
+- Fixed stale `imageAlt` reference in `story/nodes.js` module comment
+
 ### Fixed
 - 10 broken `docs.slack.dev` URLs across `README.md`, `manifest.json`, and session logs — updated to current Slack documentation paths
 

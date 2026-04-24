@@ -37,6 +37,30 @@ function buildChoiceButton(choice) {
 }
 
 /**
+ * Build a "Help" button element.
+ * @returns {Object} Button element
+ */
+function buildHelpButton() {
+	return {
+		type: "button",
+		text: { type: "plain_text", text: ":question: Help", emoji: true },
+		action_id: "adventure_help",
+	};
+}
+
+/**
+ * Build a "View Journey" button element.
+ * @returns {Object} Button element
+ */
+function buildJourneyButton() {
+	return {
+		type: "button",
+		text: { type: "plain_text", text: ":scroll: View Journey", emoji: true },
+		action_id: "adventure_view_journey",
+	};
+}
+
+/**
  * Build Block Kit blocks for a story node with choices.
  * @param {import('../story/nodes.js').StoryNode} node - The story node to render
  * @param {string[]} choiceHistory - Node IDs visited so far
@@ -81,18 +105,7 @@ export function buildStoryBlocks(node, choiceHistory, formData = {}) {
 
 	blocks.push({
 		type: "actions",
-		elements: [
-			{
-				type: "button",
-				text: { type: "plain_text", text: ":scroll: View Journey", emoji: true },
-				action_id: "adventure_view_journey",
-			},
-			{
-				type: "button",
-				text: { type: "plain_text", text: ":question: Help", emoji: true },
-				action_id: "adventure_help",
-			},
-		],
+		elements: [buildJourneyButton(), buildHelpButton()],
 	});
 
 	blocks.push({
@@ -160,11 +173,7 @@ export function buildEndingBlocks(node, choiceHistory, formData = {}) {
 					action_id: "adventure_play_again",
 					style: "primary",
 				},
-				{
-					type: "button",
-					text: { type: "plain_text", text: ":question: Help", emoji: true },
-					action_id: "adventure_help",
-				},
+				buildHelpButton(),
 			],
 		},
 	];

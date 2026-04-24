@@ -1,5 +1,6 @@
 import { buildEndingBlocks, buildStoryBlocks } from "../../game/renderer.js";
-import { advanceState, getFormData, getState, setMessageRef, startGame } from "../../game/state.js";
+import { getUserId } from "../helpers.js";
+import { advanceState, getFormData, setMessageRef, startGame } from "../../game/state.js";
 import { STARTING_NODE_ID, STORY_NODES } from "../../story/nodes.js";
 
 /**
@@ -14,7 +15,7 @@ import { STARTING_NODE_ID, STORY_NODES } from "../../story/nodes.js";
 export async function adventureChoiceCallback({ ack, action, body, client, logger }) {
 	await ack();
 
-	const userId = body.user.id;
+	const userId = getUserId(body);
 	const channelId = body.channel?.id;
 	const messageTs = body.message?.ts;
 

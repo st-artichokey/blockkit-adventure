@@ -1,4 +1,5 @@
 import { buildStoryBlocks } from "../../game/renderer.js";
+import { getUserId } from "../helpers.js";
 import { setMessageRef, startGame } from "../../game/state.js";
 import { STARTING_NODE_ID, STORY_NODES } from "../../story/nodes.js";
 
@@ -14,7 +15,7 @@ import { STARTING_NODE_ID, STORY_NODES } from "../../story/nodes.js";
 export async function startAdventureCallback({ ack, body, client, logger }) {
 	await ack();
 
-	const userId = body.user.id ?? body.user_id;
+	const userId = getUserId(body);
 
 	try {
 		const state = startGame(userId);

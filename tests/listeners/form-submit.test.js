@@ -87,7 +87,7 @@ describe("formSubmitCallback", () => {
 		});
 
 		const state = stateModule.getState("U_PLAYER");
-		assert.equal(state.currentNodeId, "postmortem_complete");
+		assert.ok(state.choiceHistory.includes("postmortem_complete"));
 	});
 
 	it("updates the chat message", async () => {
@@ -168,7 +168,7 @@ describe("formSubmitCallback", () => {
 		});
 
 		const state = stateModule.getState("U_PLAYER");
-		assert.equal(state.currentNodeId, "friday_alert");
+		assert.deepEqual(state.choiceHistory, ["friday_alert"]);
 		assert.equal(client.chat.update.mock.calls.length, 0);
 	});
 

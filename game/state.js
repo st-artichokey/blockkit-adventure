@@ -2,7 +2,6 @@ import { STARTING_NODE_ID } from "../story/nodes.js";
 
 /**
  * @typedef {Object} GameState
- * @property {string} currentNodeId - The current story node
  * @property {string[]} choiceHistory - Node IDs visited in order
  * @property {string} messageTs - Timestamp of the current game message
  * @property {string} channelId - Channel (DM) where the game is being played
@@ -19,7 +18,6 @@ const gameStates = new Map();
  */
 export function startGame(userId) {
 	const state = {
-		currentNodeId: STARTING_NODE_ID,
 		choiceHistory: [STARTING_NODE_ID],
 		messageTs: "",
 		channelId: "",
@@ -49,7 +47,6 @@ export function advanceState(userId, nextNodeId) {
 	if (!state) {
 		return startGame(userId);
 	}
-	state.currentNodeId = nextNodeId;
 	state.choiceHistory.push(nextNodeId);
 	return state;
 }

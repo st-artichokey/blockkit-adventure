@@ -20,7 +20,6 @@ describe("Game state", () => {
 
 	it("startGame initializes state at the starting node", () => {
 		const state = startGame(userId);
-		assert.equal(state.currentNodeId, STARTING_NODE_ID);
 		assert.deepEqual(state.choiceHistory, [STARTING_NODE_ID]);
 		assert.equal(state.messageTs, "");
 		assert.equal(state.channelId, "");
@@ -33,19 +32,18 @@ describe("Game state", () => {
 	it("getState returns the current state after starting", () => {
 		startGame(userId);
 		const state = getState(userId);
-		assert.equal(state.currentNodeId, STARTING_NODE_ID);
+		assert.deepEqual(state.choiceHistory, [STARTING_NODE_ID]);
 	});
 
-	it("advanceState updates the current node and history", () => {
+	it("advanceState updates the history", () => {
 		startGame(userId);
 		const state = advanceState(userId, "check_logs");
-		assert.equal(state.currentNodeId, "check_logs");
 		assert.deepEqual(state.choiceHistory, [STARTING_NODE_ID, "check_logs"]);
 	});
 
 	it("advanceState creates a new game if none exists", () => {
 		const state = advanceState(userId, "check_logs");
-		assert.equal(state.currentNodeId, STARTING_NODE_ID);
+		assert.deepEqual(state.choiceHistory, [STARTING_NODE_ID]);
 	});
 
 	it("setMessageRef updates channel and timestamp", () => {

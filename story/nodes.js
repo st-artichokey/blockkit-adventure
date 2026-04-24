@@ -1,7 +1,7 @@
 /**
  * Story graph for "The Lost Deploy" — a developer-themed choose-your-own-adventure.
  *
- * Each node has: id, title, text, optional imageAlt, choices (or isEnding + summary).
+ * Each node has: id, title, text, choices (or isEnding + summary).
  * Choice action IDs follow the pattern: adventure_choice_<nextNodeId>
  */
 
@@ -50,7 +50,7 @@ export const STORY_NODES = {
 			{ text: "Check the logs", nextNodeId: "check_logs", style: "primary" },
 			{
 				text: "Rollback immediately",
-				nextNodeId: "rollback_blind",
+				nextNodeId: "rollback_hasty",
 				style: "danger",
 				confirmText: "No time to check?",
 			},
@@ -74,9 +74,9 @@ export const STORY_NODES = {
 		],
 	},
 
-	rollback_blind: {
-		id: "rollback_blind",
-		title: "Blind Rollback",
+	rollback_hasty: {
+		id: "rollback_hasty",
+		title: "Hasty Rollback",
 		text: "You fire off the rollback command without checking what changed. The deploy pipeline kicks off...\n\n:hourglass_flowing_sand: 3 minutes pass...\n\nThe rollback completes, but the error rate is *still climbing*. Turns out the previous version had a different bug that was masked by a feature flag — which was toggled off in the new deploy. Now you have *two* problems.",
 		choices: [
 			{ text: "Check the logs now", nextNodeId: "check_logs", style: "primary" },
