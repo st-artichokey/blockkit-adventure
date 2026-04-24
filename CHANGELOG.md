@@ -1,5 +1,34 @@
 # Changelog
 
+## 2026-04-24
+
+### Added
+- Form input node type: new `formInput` property on story nodes collects text input via a modal
+- `buildFormInputModal()` in `game/modals.js` — modal with `plain_text_input` block and `view_submission` callback
+- `listeners/actions/open-form.js` — action handler to open the form input modal from a button click
+- `listeners/views/form-submit.js` — `view_submission` handler that stores input, advances state, and updates the message
+- `listeners/views/index.js` — view listener registration
+- Template resolution in renderer: `{{key}}` placeholders in node text/summary are replaced with form data
+- `setFormData()` and `getFormData()` in `game/state.js` for per-user form data storage
+- New story node `postmortem_complete` — ending that displays the player's custom post-mortem title
+- 24 new tests across 5 files (79 total)
+
+### Changed
+- `postmortem_tonight` converted from ending node to form input node (asks player to title their post-mortem)
+- `buildStoryBlocks()` and `buildEndingBlocks()` accept optional `formData` parameter for template resolution
+- Story graph tests updated: "non-ending nodes have choices or formInput", orphan detection includes `formInput.nextNodeId`
+- `adventureChoiceCallback` passes `formData` to renderers
+- `setFormData()` escapes mrkdwn characters (`*`, `_`, `~`, `` ` ``, `>`) with zero-width spaces and trims whitespace
+- `formSubmitCallback` rejects whitespace-only input with a `view_submission` validation error before advancing state
+- Mixed actions block: nodes with both `formInput` and `choices` render form button + choice buttons together (cancel escape hatch)
+- Enriched form modals: optional `modalHeader`, `modalFlavorText`, and `modalHint` fields add header, section, and context blocks to modals
+- Second form input path: `mentor_fix` now collects a message to Alex (demos form input on independent path with different modal flavor)
+- 3 new story nodes: `postmortem_skipped` (skip post-mortem ending), `mentor_fix_complete` (encouraging DM ending), `mentor_fix_quick` (quick thanks ending)
+- Emoji hint in placeholder: `:fire:` in post-mortem placeholder, `:star:` in Alex message placeholder
+- `buildChoiceButton()` extracted as reusable helper in renderer
+- Story now has 17 nodes and 8 endings (was 14 nodes, 6 endings)
+- 7 new tests (90 total)
+
 ## 2026-04-23
 
 ### Added

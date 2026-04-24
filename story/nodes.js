@@ -16,11 +16,25 @@ export const STARTING_NODE_ID = "friday_alert";
  */
 
 /**
+ * @typedef {Object} FormInput
+ * @param {string} label - Label shown above the text input in the modal
+ * @param {string} placeholder - Placeholder text inside the input
+ * @param {string} buttonText - Text for the button that opens the modal
+ * @param {string} [buttonStyle] - Button style: "primary" or "danger"
+ * @param {string} nextNodeId - Node to advance to after submission
+ * @param {string} stateKey - Key under which to store the input in game state
+ * @param {string} [modalHeader] - Header text shown at the top of the modal
+ * @param {string} [modalFlavorText] - Flavor text shown below the header in the modal
+ * @param {string} [modalHint] - Context hint shown below the input in the modal
+ */
+
+/**
  * @typedef {Object} StoryNode
  * @param {string} id - Unique node identifier
  * @param {string} title - Scene heading
  * @param {string} text - Narrative text (mrkdwn format)
  * @param {Choice[]} [choices] - Available player choices
+ * @param {FormInput} [formInput] - If present, this node collects text input via a modal
  * @param {boolean} [isEnding] - Whether this is a terminal node
  * @param {string} [summary] - Ending summary text
  * @param {string} [emoji] - Emoji for the ending
@@ -153,11 +167,40 @@ export const STORY_NODES = {
 	postmortem_tonight: {
 		id: "postmortem_tonight",
 		title: "The Friday Night Post-Mortem",
-		text: "You open a doc and start writing while it's fresh. Root cause, timeline, impact, action items. You identify a missing integration test that would have caught this.\n\nYou share it in the channel and get immediate kudos from leadership. The team feels informed and confident.",
+		text: "You open a doc and start writing while it's fresh. Root cause, timeline, impact, action items.\n\nBefore you share it, you need a clear title that captures the incident for the team. Or you could skip it and head home...",
+		formInput: {
+			label: "Post-mortem title",
+			placeholder: "e.g., :fire: Null pointer in user profile endpoint",
+			buttonText: ":memo: Write Post-Mortem Title",
+			buttonStyle: "primary",
+			nextNodeId: "postmortem_complete",
+			stateKey: "postmortemTitle",
+			modalHeader: ":memo: Post-Mortem",
+			modalFlavorText:
+				"Your team is waiting in #incident-review. A good title helps everyone find this later.",
+			modalHint: "Keep it concise — this goes in the incident tracker.",
+		},
+		choices: [{ text: "Skip it and go home", nextNodeId: "postmortem_skipped" }],
+	},
+
+	postmortem_complete: {
+		id: "postmortem_complete",
+		title: "Post-Mortem Published",
+		text: 'You publish the post-mortem: *"{{postmortemTitle}}"*\n\nThe team reviews it Monday morning. Your thorough write-up becomes a template for future incidents. Leadership gives kudos in the all-hands.',
 		isEnding: true,
 		summary:
-			"You diagnosed the problem, fixed it properly, and left the team better prepared. The post-mortem became a template for future incidents. Senior engineer energy.",
+			'You diagnosed the problem, fixed it properly, and wrote a post-mortem titled "{{postmortemTitle}}". Senior engineer energy.',
 		emoji: ":trophy:",
+	},
+
+	postmortem_skipped: {
+		id: "postmortem_skipped",
+		title: "No Post-Mortem",
+		text: 'You close the doc and head home. "I\'ll write it Monday," you tell yourself.\n\n:calendar: Monday arrives. Nobody remembers the exact timeline. The action items are fuzzy. Three weeks later, the same bug ships again.',
+		isEnding: true,
+		summary:
+			"You fixed the incident but skipped the follow-through. Without documentation, the team repeated the same mistake. The post-mortem writes itself — eventually.",
+		emoji: ":wastebasket:",
 	},
 
 	monitor_and_go: {
@@ -173,10 +216,38 @@ export const STORY_NODES = {
 	mentor_fix: {
 		id: "mentor_fix",
 		title: "Pair Programming Under Pressure",
-		text: 'You hop on a call with Alex and walk them through reading the logs, identifying the bug, and writing the fix. It takes a bit longer, but Alex learns the debugging process.\n\nAlex pushes the PR. You review and approve. The fix deploys cleanly.\n\n"Thank you so much," Alex says. "I was terrified but now I actually understand what happened."',
+		text: 'You hop on a call with Alex and walk them through reading the logs, identifying the bug, and writing the fix. It takes a bit longer, but Alex learns the debugging process.\n\nAlex pushes the PR. You review and approve. The fix deploys cleanly.\n\n"Thank you so much," Alex says. "I was terrified but now I actually understand what happened."\n\nYou could send Alex an encouraging message — or just say thanks and head out.',
+		formInput: {
+			label: "Message to Alex",
+			placeholder: "e.g., :star: Great debugging today!",
+			buttonText: ":speech_balloon: Send Alex a message",
+			buttonStyle: "primary",
+			nextNodeId: "mentor_fix_complete",
+			stateKey: "alexMessage",
+			modalHeader: ":speech_balloon: Message to Alex",
+			modalFlavorText: "Alex is online and just pushed the fix. Now's a good time to send a note.",
+			modalHint: "Alex is new to the team — a kind word goes a long way.",
+		},
+		choices: [{ text: "Just say thanks and go", nextNodeId: "mentor_fix_quick" }],
+	},
+
+	mentor_fix_complete: {
+		id: "mentor_fix_complete",
+		title: "The Encouraging DM",
+		text: 'You open a DM to Alex and type:\n\n> {{alexMessage}}\n\nAlex replies almost instantly: ":smiling_face_with_tear: This means a lot. I was so nervous but you made it feel safe to learn."\n\nYou close your laptop with a smile. That message will stick with Alex longer than any code review.',
 		isEnding: true,
 		summary:
-			"You turned a production incident into a mentoring moment. The fix took a bit longer, but Alex will handle the next one on their own. That's a multiplier.",
+			'You turned a production incident into a mentoring moment and followed up with an encouraging message: "{{alexMessage}}". That\'s a multiplier.',
 		emoji: ":raised_hands:",
+	},
+
+	mentor_fix_quick: {
+		id: "mentor_fix_quick",
+		title: "Quick Thanks",
+		text: 'You give Alex a quick "great job" and head out. Alex seems relieved but still a little shaken.\n\n:moon: On Monday, Alex is quieter than usual. They fixed the bug, but the experience left them anxious about deploying. A follow-up message might have helped.',
+		isEnding: true,
+		summary:
+			"You helped Alex fix the bug, but the quick exit left them uncertain. A little encouragement after a tough moment can make all the difference.",
+		emoji: ":wave:",
 	},
 };

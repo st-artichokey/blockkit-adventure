@@ -58,6 +58,101 @@ export function buildJourneyLogModal(choiceHistory) {
 }
 
 /**
+ * Build the blocks array for a form input modal, optionally enriched with
+ * a header, flavor section, and context hint.
+ * @param {import('../story/nodes.js').FormInput} formInput - The form input configuration
+ * @returns {Object[]} Block Kit blocks array
+ */
+function buildFormInputBlocks(formInput) {
+	const blocks = [];
+
+	if (formInput.modalHeader) {
+		blocks.push({
+			type: "header",
+			text: { type: "plain_text", text: formInput.modalHeader, emoji: true },
+		});
+		if (formInput.modalFlavorText) {
+			blocks.push({
+				type: "section",
+				text: {
+					type: "mrkdwn",
+					text: `_${formInput.modalFlavorText}_`,
+				},
+			});
+		}
+		blocks.push({ type: "divider" });
+	}
+
+	blocks.push({
+		type: "input",
+		block_id: "form_input_block",
+		label: {
+			type: "plain_text",
+			text: formInput.label,
+			emoji: true,
+		},
+		element: {
+			type: "plain_text_input",
+			action_id: "form_input_value",
+			placeholder: {
+				type: "plain_text",
+				text: formInput.placeholder,
+				emoji: true,
+			},
+			max_length: 100,
+		},
+	});
+
+	if (formInput.modalHint) {
+		blocks.push({
+			type: "context",
+			elements: [
+				{
+					type: "mrkdwn",
+					text: `:bulb: _${formInput.modalHint}_`,
+				},
+			],
+		});
+	}
+
+	return blocks;
+}
+
+/**
+ * Build a modal view with a text input for a form input node.
+ * @param {import('../story/nodes.js').FormInput} formInput - The form input configuration
+ * @param {string} nodeId - The current node ID (passed via private_metadata for the submission handler)
+ * @returns {import('@slack/bolt').ModalView} Modal view object
+ */
+export function buildFormInputModal(formInput, nodeId) {
+	return {
+		type: "modal",
+		callback_id: "adventure_form_submit",
+		private_metadata: JSON.stringify({
+			nodeId,
+			stateKey: formInput.stateKey,
+			nextNodeId: formInput.nextNodeId,
+		}),
+		title: {
+			type: "plain_text",
+			text: "Write Your Response",
+			emoji: true,
+		},
+		submit: {
+			type: "plain_text",
+			text: "Submit",
+			emoji: true,
+		},
+		close: {
+			type: "plain_text",
+			text: "Cancel",
+			emoji: true,
+		},
+		blocks: buildFormInputBlocks(formInput),
+	};
+}
+
+/**
  * Build a modal view explaining how to play the adventure game.
  * @returns {import('@slack/bolt').ModalView} Modal view object
  */

@@ -1,6 +1,14 @@
 import assert from "node:assert/strict";
 import { beforeEach, describe, it } from "node:test";
-import { advanceState, getState, resetGame, setMessageRef, startGame } from "../../game/state.js";
+import {
+	advanceState,
+	getFormData,
+	getState,
+	resetGame,
+	setFormData,
+	setMessageRef,
+	startGame,
+} from "../../game/state.js";
 import { STARTING_NODE_ID } from "../../story/nodes.js";
 
 describe("Game state", () => {
@@ -57,5 +65,49 @@ describe("Game state", () => {
 		startGame(userId);
 		resetGame(userId);
 		assert.equal(getState(userId), undefined);
+	});
+
+	it("startGame initializes empty formData", () => {
+		const state = startGame(userId);
+		assert.deepEqual(state.formData, {});
+	});
+
+	it("setFormData stores a value", () => {
+		startGame(userId);
+		setFormData(userId, "postmortemTitle", "Null pointer in profile endpoint");
+		const data = getFormData(userId);
+		assert.equal(data.postmortemTitle, "Null pointer in profile endpoint");
+	});
+
+	it("setFormData is a no-op for unknown users", () => {
+		setFormData("U_UNKNOWN", "key", "value");
+		assert.deepEqual(getFormData("U_UNKNOWN"), {});
+	});
+
+	it("getFormData returns empty object for unknown users", () => {
+		assert.deepEqual(getFormData("U_UNKNOWN"), {});
+	});
+
+	it("getFormData returns stored values", () => {
+		startGame(userId);
+		setFormData(userId, "a", "1");
+		setFormData(userId, "b", "2");
+		assert.deepEqual(getFormData(userId), { a: "1", b: "2" });
+	});
+
+	it("setFormData escapes mrkdwn characters", () => {
+		startGame(userId);
+		setFormData(userId, "title", "*bold* _italic_ ~strike~ `code` >quote");
+		const data = getFormData(userId);
+		assert.equal(
+			data.title,
+			"\u200B*\u200Bbold\u200B*\u200B \u200B_\u200Bitalic\u200B_\u200B \u200B~\u200Bstrike\u200B~\u200B \u200B`\u200Bcode\u200B`\u200B \u200B>\u200Bquote",
+		);
+	});
+
+	it("setFormData trims leading and trailing whitespace", () => {
+		startGame(userId);
+		setFormData(userId, "title", "  hello world  ");
+		assert.equal(getFormData(userId).title, "hello world");
 	});
 });

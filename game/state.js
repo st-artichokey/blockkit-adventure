@@ -6,6 +6,7 @@ import { STARTING_NODE_ID } from "../story/nodes.js";
  * @property {string[]} choiceHistory - Node IDs visited in order
  * @property {string} messageTs - Timestamp of the current game message
  * @property {string} channelId - Channel (DM) where the game is being played
+ * @property {Record<string, string>} formData - User-provided form inputs keyed by stateKey
  */
 
 /** @type {Map<string, GameState>} */
@@ -22,6 +23,7 @@ export function startGame(userId) {
 		choiceHistory: [STARTING_NODE_ID],
 		messageTs: "",
 		channelId: "",
+		formData: {},
 	};
 	gameStates.set(userId, state);
 	return state;
@@ -64,6 +66,40 @@ export function setMessageRef(userId, channelId, messageTs) {
 		state.channelId = channelId;
 		state.messageTs = messageTs;
 	}
+}
+
+/**
+ * Escape mrkdwn formatting characters by wrapping them with zero-width spaces.
+ * Prevents user input from being rendered as Slack formatting.
+ * @param {string} text - Raw user input
+ * @returns {string} Escaped text safe for mrkdwn contexts
+ */
+function escapeMrkdwn(text) {
+	return text.replace(/([*_~`>])/g, "\u200B$1\u200B");
+}
+
+/**
+ * Store a form input value in the game state.
+ * Trims whitespace and escapes mrkdwn characters before storing.
+ * @param {string} userId - Slack user ID
+ * @param {string} key - The form data key (matches formInput.stateKey)
+ * @param {string} value - The user-provided text
+ */
+export function setFormData(userId, key, value) {
+	const state = gameStates.get(userId);
+	if (state) {
+		state.formData[key] = escapeMrkdwn(value.trim());
+	}
+}
+
+/**
+ * Get all stored form data for a user's game.
+ * @param {string} userId - Slack user ID
+ * @returns {Record<string, string>} The form data, or empty object
+ */
+export function getFormData(userId) {
+	const state = gameStates.get(userId);
+	return state?.formData ?? {};
 }
 
 /**
