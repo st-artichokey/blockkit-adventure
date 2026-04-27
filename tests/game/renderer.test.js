@@ -85,6 +85,77 @@ describe("buildStoryBlocks", () => {
 	});
 });
 
+describe("buildStoryBlocks with imageUrl", () => {
+	const imageNode = {
+		id: "img_node",
+		title: "Scene With Image",
+		text: "Look at this.",
+		imageUrl: "https://example.com/image.png",
+		imageAlt: "A descriptive alt text",
+		choices: [{ text: "Continue", nextNodeId: "next" }],
+	};
+
+	it("includes an image block between section and divider", () => {
+		const blocks = buildStoryBlocks(imageNode, ["img_node"]);
+		const types = blocks.map((b) => b.type);
+		assert.deepEqual(types, [
+			"header",
+			"section",
+			"image",
+			"divider",
+			"actions",
+			"actions",
+			"context",
+		]);
+	});
+
+	it("image block has correct url and alt text", () => {
+		const blocks = buildStoryBlocks(imageNode, ["img_node"]);
+		const imageBlock = blocks.find((b) => b.type === "image");
+		assert.equal(imageBlock.image_url, "https://example.com/image.png");
+		assert.equal(imageBlock.alt_text, "A descriptive alt text");
+	});
+
+	it("falls back to node title for alt text when imageAlt is missing", () => {
+		const nodeWithoutAlt = { ...imageNode, imageAlt: undefined };
+		const blocks = buildStoryBlocks(nodeWithoutAlt, ["img_node"]);
+		const imageBlock = blocks.find((b) => b.type === "image");
+		assert.equal(imageBlock.alt_text, "Scene With Image");
+	});
+
+	it("does not include image block when imageUrl is absent", () => {
+		const nodeWithoutImage = {
+			id: "no_img",
+			title: "Plain",
+			text: "No image.",
+			choices: [{ text: "Go", nextNodeId: "x" }],
+		};
+		const blocks = buildStoryBlocks(nodeWithoutImage, ["no_img"]);
+		assert.ok(!blocks.some((b) => b.type === "image"));
+	});
+});
+
+describe("buildEndingBlocks with imageUrl", () => {
+	const endingWithImage = {
+		id: "img_ending",
+		title: "Image Ending",
+		text: "You did it.",
+		isEnding: true,
+		summary: "Great job.",
+		emoji: ":trophy:",
+		imageUrl: "https://example.com/ending.png",
+		imageAlt: "Victory",
+	};
+
+	it("includes an image block in ending", () => {
+		const blocks = buildEndingBlocks(endingWithImage, ["start", "img_ending"]);
+		const imageBlock = blocks.find((b) => b.type === "image");
+		assert.ok(imageBlock);
+		assert.equal(imageBlock.image_url, "https://example.com/ending.png");
+		assert.equal(imageBlock.alt_text, "Victory");
+	});
+});
+
 describe("buildStoryBlocks with formInput", () => {
 	const formNode = {
 		id: "form_node",

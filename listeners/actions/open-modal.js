@@ -1,7 +1,7 @@
 import { buildHelpModal, buildJourneyLogModal } from "../../game/modals.js";
-import { getUserId } from "../helpers.js";
 import { getState } from "../../game/state.js";
 import { STARTING_NODE_ID } from "../../story/nodes.js";
+import { getUserId } from "../helpers.js";
 
 /**
  * Handle the "View Journey" button — open a modal showing the player's path.

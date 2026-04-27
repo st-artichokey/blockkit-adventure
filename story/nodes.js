@@ -38,6 +38,8 @@ export const STARTING_NODE_ID = "friday_alert";
  * @param {boolean} [isEnding] - Whether this is a terminal node
  * @param {string} [summary] - Ending summary text
  * @param {string} [emoji] - Emoji for the ending
+ * @param {string} [imageUrl] - URL for an image block displayed below the text
+ * @param {string} [imageAlt] - Alt text for the image block
  */
 
 /** @type {Record<string, StoryNode>} */
@@ -46,6 +48,8 @@ export const STORY_NODES = {
 		id: "friday_alert",
 		title: "The Friday Alert",
 		text: "It's *4:59 PM on a Friday*. You're about to close your laptop when your phone buzzes.\n\n> :rotating_light: *ALERT: Production deploy failed. Error rate spiking 5x.*\n\nYour heart sinks. The deploy went out 10 minutes ago and nobody noticed until now. The on-call engineer is on a flight. What do you do?",
+		imageUrl: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&h=400&fit=crop",
+		imageAlt: "A laptop screen showing error alerts in a dark terminal",
 		choices: [
 			{ text: "Check the logs", nextNodeId: "check_logs", style: "primary" },
 			{

@@ -1,8 +1,8 @@
 import { FORM_INPUT_ACTION_ID, FORM_INPUT_BLOCK_ID } from "../../game/modals.js";
 import { buildEndingBlocks, buildStoryBlocks } from "../../game/renderer.js";
-import { getUserId } from "../helpers.js";
 import { advanceState, getFormData, getState, setFormData } from "../../game/state.js";
 import { STORY_NODES } from "../../story/nodes.js";
+import { getUserId } from "../helpers.js";
 
 /**
  * Handle form input modal submission — store the input and advance the game.
