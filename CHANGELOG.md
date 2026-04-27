@@ -7,6 +7,13 @@
 - Image block rendered between narrative text and divider in both story and ending screens
 - Image on `friday_alert` opening node — visible on every playthrough
 - 5 new renderer tests for image block behavior (95 total)
+- `postEphemeralError()` helper in `listeners/helpers.js` — reusable ephemeral error messaging
+- User-facing ephemeral error messages in all listener catch blocks and validation failures
+- Ephemeral confirmation ("Adventure started! Check your DMs.") when game is triggered from a channel context
+
+### Changed
+- All listener error paths now notify the user instead of failing silently
+- Existing tests updated to mock `client.chat.postEphemeral`
 
 ## 2026-04-24
 

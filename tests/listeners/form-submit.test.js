@@ -174,7 +174,9 @@ describe("formSubmitCallback", () => {
 
 	it("logs error when state is missing", async () => {
 		const ack = mock.fn(async () => {});
-		const client = { chat: { update: mock.fn(async () => ({})) } };
+		const client = {
+			chat: { update: mock.fn(async () => ({})), postEphemeral: mock.fn(async () => ({})) },
+		};
 		const logger = { error: mock.fn() };
 
 		await formSubmitCallback({

@@ -12,6 +12,7 @@ function buildClient() {
 		chat: {
 			postMessage: mock.fn(async () => ({ channel: "D_DM", ts: "111.222" })),
 			update: mock.fn(async () => ({})),
+			postEphemeral: mock.fn(async () => ({})),
 		},
 	};
 }
