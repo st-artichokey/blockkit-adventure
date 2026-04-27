@@ -10,6 +10,10 @@
 - `postEphemeralError()` helper in `listeners/helpers.js` — reusable ephemeral error messaging
 - User-facing ephemeral error messages in all listener catch blocks and validation failures
 - Ephemeral confirmation ("Adventure started! Check your DMs.") when game is triggered from a channel context
+- Tests for `app-home-opened` listener (3 tests: publish, button, error)
+- Tests for `start-adventure` listener (4 tests: ack, DM, state ref, error)
+- Tests for `open-modal` listeners — `viewJourneyCallback` (4 tests) and `helpCallback` (3 tests)
+- Test count: 95 → 109
 
 ### Changed
 - All listener error paths now notify the user instead of failing silently
