@@ -1,5 +1,6 @@
 import { buildFormInputModal } from "../../game/modals.js";
 import { STORY_NODES } from "../../story/nodes.js";
+import { getUserId, postEphemeralError } from "../helpers.js";
 
 /**
  * Handle the "open form" button — open a modal for text input on a form input node.
@@ -13,11 +14,13 @@ import { STORY_NODES } from "../../story/nodes.js";
 export async function openFormCallback({ ack, action, body, client, logger }) {
 	await ack();
 
+	const userId = getUserId(body);
 	const nodeId = action.value;
 	const node = STORY_NODES[nodeId];
 
 	if (!node?.formInput) {
 		logger.error(`Open form error: node "${nodeId}" not found or has no formInput`);
+		await postEphemeralError(client, userId);
 		return;
 	}
 
@@ -28,5 +31,6 @@ export async function openFormCallback({ ack, action, body, client, logger }) {
 		});
 	} catch (error) {
 		logger.error(`Open form modal error: ${error.message}`);
+		await postEphemeralError(client, userId);
 	}
 }

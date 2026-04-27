@@ -1,7 +1,7 @@
 import { buildEndingBlocks, buildStoryBlocks } from "../../game/renderer.js";
 import { advanceState, getFormData, setMessageRef, startGame } from "../../game/state.js";
 import { STARTING_NODE_ID, STORY_NODES } from "../../story/nodes.js";
-import { getUserId } from "../helpers.js";
+import { getUserId, postEphemeralError } from "../helpers.js";
 
 /**
  * Handle adventure choice button clicks and "Play Again".
@@ -40,6 +40,7 @@ export async function adventureChoiceCallback({ ack, action, body, client, logge
 
 		if (!node) {
 			logger.error(`Unknown story node: ${nextNodeId}`);
+			await postEphemeralError(client, userId);
 			return;
 		}
 
@@ -57,5 +58,6 @@ export async function adventureChoiceCallback({ ack, action, body, client, logge
 		});
 	} catch (error) {
 		logger.error(`Adventure choice error: ${error.message}`);
+		await postEphemeralError(client, userId);
 	}
 }

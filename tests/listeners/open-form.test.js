@@ -77,7 +77,10 @@ describe("openFormCallback", () => {
 
 	it("logs error for unknown node", async () => {
 		const ack = mock.fn(async () => {});
-		const client = { views: { open: mock.fn(async () => ({})) } };
+		const client = {
+			views: { open: mock.fn(async () => ({})) },
+			chat: { postEphemeral: mock.fn(async () => ({})) },
+		};
 		const logger = { error: mock.fn() };
 
 		await openFormCallback({

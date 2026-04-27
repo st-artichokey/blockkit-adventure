@@ -2,7 +2,7 @@ import { FORM_INPUT_ACTION_ID, FORM_INPUT_BLOCK_ID } from "../../game/modals.js"
 import { buildEndingBlocks, buildStoryBlocks } from "../../game/renderer.js";
 import { advanceState, getFormData, getState, setFormData } from "../../game/state.js";
 import { STORY_NODES } from "../../story/nodes.js";
-import { getUserId } from "../helpers.js";
+import { getUserId, postEphemeralError } from "../helpers.js";
 
 /**
  * Handle form input modal submission — store the input and advance the game.
@@ -32,6 +32,11 @@ export async function formSubmitCallback({ ack, body, view, client, logger }) {
 	const state = getState(userId);
 	if (!state) {
 		logger.error(`Form submit error: no game state for user "${userId}"`);
+		await postEphemeralError(
+			client,
+			userId,
+			"Your game session expired — please start a new adventure.",
+		);
 		return;
 	}
 
@@ -55,5 +60,6 @@ export async function formSubmitCallback({ ack, body, view, client, logger }) {
 		});
 	} catch (error) {
 		logger.error(`Form submit error: ${error.message}`);
+		await postEphemeralError(client, userId);
 	}
 }
