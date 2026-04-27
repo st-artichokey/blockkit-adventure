@@ -18,7 +18,7 @@ friday_alert ─── "The Friday Alert"
 │       │   ├── [plain_text_input modal] mentor_fix_complete ─── "The Encouraging DM" [END :raised_hands:]
 │       │   └── [button] mentor_fix_quick ─── "Quick Thanks" [END :wave:]
 │       └── [button] rollback_smart ─── (see above)
-├── [button danger + confirm] rollback_blind ─── "Blind Rollback"
+├── [button danger + confirm] rollback_hasty ─── "Hasty Rollback"
 │   ├── [button primary] check_logs ─── (see above)
 │   └── [button danger + confirm] roll_forward_chaos ─── "Double Trouble" [END :fire_engine:]
 └── [button] ignore_alert ─── "Not My Problem" [END :see_no_evil:]
