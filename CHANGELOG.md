@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-04-27
+
+### Added
+- Image block support: optional `imageUrl` and `imageAlt` properties on story nodes
+- Image block rendered between narrative text and divider in both story and ending screens
+- Image on `friday_alert` opening node — visible on every playthrough
+- 5 new renderer tests for image block behavior (95 total)
+
 ## 2026-04-24
 
 ### Added

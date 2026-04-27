@@ -1,7 +1,7 @@
 import { buildStoryBlocks } from "../../game/renderer.js";
-import { getUserId } from "../helpers.js";
 import { setMessageRef, startGame } from "../../game/state.js";
 import { STARTING_NODE_ID, STORY_NODES } from "../../story/nodes.js";
+import { getUserId } from "../helpers.js";
 
 /**
  * Handle the start_adventure shortcut and App Home button.

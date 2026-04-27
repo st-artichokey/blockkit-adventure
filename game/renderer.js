@@ -77,8 +77,17 @@ export function buildStoryBlocks(node, choiceHistory, formData = {}) {
 			type: "section",
 			text: { type: "mrkdwn", text: resolveTemplates(node.text, formData) },
 		},
-		{ type: "divider" },
 	];
+
+	if (node.imageUrl) {
+		blocks.push({
+			type: "image",
+			image_url: node.imageUrl,
+			alt_text: node.imageAlt ?? node.title,
+		});
+	}
+
+	blocks.push({ type: "divider" });
 
 	if (node.formInput) {
 		const fi = node.formInput;
@@ -133,7 +142,7 @@ export function buildEndingBlocks(node, choiceHistory, formData = {}) {
 		.map((nodeId) => STORY_NODES[nodeId]?.title ?? nodeId)
 		.join(" → ");
 
-	return [
+	const blocks = [
 		{
 			type: "header",
 			text: {
@@ -146,7 +155,18 @@ export function buildEndingBlocks(node, choiceHistory, formData = {}) {
 			type: "section",
 			text: { type: "mrkdwn", text: resolveTemplates(node.text, formData) },
 		},
-		{ type: "divider" },
+	];
+
+	if (node.imageUrl) {
+		blocks.push({
+			type: "image",
+			image_url: node.imageUrl,
+			alt_text: node.imageAlt ?? node.title,
+		});
+	}
+
+	blocks.push({ type: "divider" });
+	blocks.push(
 		{
 			type: "section",
 			text: {
@@ -176,5 +196,7 @@ export function buildEndingBlocks(node, choiceHistory, formData = {}) {
 				buildHelpButton(),
 			],
 		},
-	];
+	);
+
+	return blocks;
 }
