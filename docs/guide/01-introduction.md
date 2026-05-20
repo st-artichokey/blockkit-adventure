@@ -6,43 +6,25 @@ This guide walks through the full journey using a real app — **Block Kit Adven
 
 ## What This Guide Covers
 
-Ten posts, each focused on a stage of the process:
+This guide is organized into ten posts, each focused on a stage of the marketplace journey. After this introduction, we start with planning — choosing interaction surfaces, designing for multi-workspace from day one, and scoping permissions to the minimum your app needs. From there, we move into the technical work of building for distribution: OAuth install flows, token management, persistent state, and hosting decisions.
 
-1. **Introduction** (you're here)
-2. **Planning your app** — choosing interaction surfaces and scoping permissions
-3. **Building for distribution** — OAuth, token management, persistence, hosting
-4. **Crafting your manifest** — display info, features, scopes, and the `app_directory` section
-5. **Polishing the user experience** — App Home, error handling, confirmation flows
-6. **Testing and quality** — unit tests, Block Kit validation, multi-workspace testing
-7. **Security and privacy** — data practices, token revocation, secrets management
-8. **Preparing your listing** — descriptions, screenshots, support resources
-9. **The submission process** — checklists, review criteria, common rejections
-10. **Post-launch** — monitoring, updates, and growing your user base
+The middle sections cover what makes or breaks a marketplace listing in practice. We walk through manifest configuration, UX polish (error handling, App Home onboarding, confirmation dialogs), testing strategies that go beyond unit tests, and the security and privacy requirements that trip up many first-time submissions.
+
+The final posts focus on the marketplace itself — preparing your listing copy and screenshots, navigating the submission and review process, and maintaining your app after launch. Each post is self-contained but builds on concepts from earlier sections.
 
 ## The Example App: Block Kit Adventure
 
 Block Kit Adventure is a Bolt v4 app (Node.js, ESM) that runs a developer-themed story called "The Lost Deploy." Players navigate a Friday afternoon production incident through button choices in a DM, encountering different Block Kit elements along the way.
 
-Here's what makes it a useful reference:
+The app touches multiple interaction surfaces — a global shortcut and App Home tab for entry points, DM messages for gameplay, and modals for collecting text input. It renders headers, sections, actions, context blocks, dividers, images, styled buttons, and confirm dialogs, making it a practical reference for most of the Block Kit surface area. The game updates a single message in place via `chat.update` rather than posting new messages per choice, and modal form submissions feed user-provided text back into the narrative through template resolution.
 
-- **Multiple interaction surfaces** — global shortcut, App Home tab, DM messages, modals
-- **Rich Block Kit usage** — headers, sections, actions, context, dividers, images, inputs, button styles, confirm dialogs
-- **In-place message updates** — the game updates a single message via `chat.update` rather than posting new ones
-- **Form collection** — modals with `plain_text_input` that feed data back into the narrative
-- **Clean architecture** — listeners organized by type, game logic separated from rendering
-
-The current codebase runs in Socket Mode for a single workspace. Throughout this guide, we'll show both what it does well (manifest structure, UX patterns, testing) and what would need to change for marketplace distribution (OAuth, persistence, hosting).
+Architecturally, the codebase separates concerns cleanly: listeners organized by type (actions, events, shortcuts, views), game logic isolated from Block Kit rendering, and story data defined declaratively in a graph structure. The current codebase runs in Socket Mode for a single workspace. Throughout this guide, we'll show both what it does well (manifest structure, UX patterns, testing) and what would need to change for marketplace distribution (OAuth, persistence, hosting).
 
 ## Prerequisites
 
-Before starting marketplace preparation, you should have:
+This guide assumes you already have a working Slack app — something that functions in at least one workspace, even if it's just your development workspace. You'll need a Slack developer account with access to [api.slack.com/apps](https://api.slack.com/apps), and your app's source should be under version control since we'll be making structural changes throughout.
 
-- **A working Slack app** — something that functions in at least one workspace
-- **A Slack developer account** — access to [api.slack.com/apps](https://api.slack.com/apps)
-- **Familiarity with Bolt** (or the Slack APIs directly) — this guide assumes you can read Bolt handler code
-- **Your app's source under version control** — you'll be making structural changes
-
-If you're starting from scratch, the [Bolt getting started guide](https://docs.slack.dev/bolt-js/getting-started) will get you to a working app. Come back here once you have something that works locally.
+The code examples use Bolt for JavaScript, so familiarity with Bolt (or the underlying Slack APIs) will help you follow along. If you're starting from scratch, the [Bolt getting started guide](https://docs.slack.dev/bolt-js/getting-started) will get you to a working app. Come back here once you have something running locally.
 
 ## The Gap Between "Works" and "Listed"
 
